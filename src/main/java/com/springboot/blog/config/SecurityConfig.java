@@ -42,6 +42,7 @@ public class SecurityConfig {
         .authorizeHttpRequests((authorize) ->
                 //authorize.anyRequest().authenticated()
                 authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST ,"/api/auth/newaccount").permitAll()
                         .anyRequest().authenticated());

@@ -14,7 +14,7 @@ public interface AccountRepository extends JpaRepository<Account, Long > {
 	//@Query(value="SELECT * FROM USERS WHERE ")
 	//Optional<Account> findByUserName(String username);
 	
-	boolean existsByUser(Optional<User> user);
+	boolean existsByUser(User user);
 	
 	boolean existsByAccountName(String accountname);
 }

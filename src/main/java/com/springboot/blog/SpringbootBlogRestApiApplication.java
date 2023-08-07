@@ -7,10 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 
-
-
-
-
 @SpringBootApplication
 @ComponentScan(basePackages = "com.springboot.blog.service")
 public class SpringbootBlogRestApiApplication {
