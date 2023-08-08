@@ -35,20 +35,27 @@ public class AccountOverViewServiceImpl implements AccountOverViewService {
 		
 		if(user.isEmpty()) {
 			logger.info("The user is empty");
-			throw new notFoundException("No user found with the username:"+username);
+			throw new notFoundException("No user found with the username: "+username);
 		}else {
 			logger.info("The user is not empty and fetching all the accounts."); 
-
+			
 		    List<Account> accounts = accountRepo.findByUser(user.get())
 		    		.stream()
 		    		.collect(Collectors.toList());
-		    String summary="";
-		    logger.info("Adding all the account summary into a variable");
-		    for (Account account : accounts) {
-		    	summary+= " \n" +account.toString();
+		    if(accounts.isEmpty()) {
+		    	logger.info("No accounts found for the user"); 
+		    	return new ResponseEntity<>("You have no account with us. Please create one" ,HttpStatus.OK);
+		    }else {
+		    	String summary="";
+			    logger.info("Accounts found for the user. Starting to get the overview");
+			    for (Account account : accounts) {
+			    	summary+= " \n" +account.toString();
+			    }
+				logger.info("The account overview is fetched sucessfully");
+				return new ResponseEntity<>("Over view of accounts: \n"+summary ,HttpStatus.OK);
+		    	
 		    }
-			logger.info("The account overview is fetched sucessfully");
-			return new ResponseEntity<>("Over view of accounts: \n"+summary ,HttpStatus.OK);
+		     
 		}
 		
 	}

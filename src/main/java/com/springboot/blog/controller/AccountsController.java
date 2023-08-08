@@ -34,7 +34,6 @@ public class AccountsController {
 		return newAccountCreationService.accountCreation(accountDto);
 	}
 	
-	
 	//to get the over view of all the accounts a user has.
 	@GetMapping("/accountoverview")
 	public ResponseEntity<String> accountOverview(@RequestBody @NotNull String username){

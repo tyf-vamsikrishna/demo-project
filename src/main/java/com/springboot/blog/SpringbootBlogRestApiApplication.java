@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.springboot.blog.service")
+@ComponentScan(basePackages = "com.springboot.blog")
 public class SpringbootBlogRestApiApplication {
 
 	public static void main(String[] args) {
