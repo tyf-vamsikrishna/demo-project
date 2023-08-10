@@ -16,7 +16,6 @@ import lombok.Data;
 @Entity
 @Table(name="accounts",uniqueConstraints=
 @UniqueConstraint(columnNames = {"id"}))
-
 public class Account {
 	
 	@Id

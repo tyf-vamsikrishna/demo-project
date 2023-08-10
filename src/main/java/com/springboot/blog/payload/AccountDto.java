@@ -2,6 +2,7 @@ package com.springboot.blog.payload;
 
 
 
+import com.springboot.blog.entity.Account;
 import com.springboot.blog.entity.User;
 
 import lombok.Data;
@@ -17,6 +18,13 @@ public class AccountDto {
 	
 	public User getUser() {
 		return user;
+	}
+	
+	public void setAccountDtoForTransfer(Account account) {
+		this.setAccountName(account.getAccountName());
+		this.setBalance(account.getBalance());
+		this.setId(account.getId());
+		this.setUser(account.getUser());
 	}
 }
 

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.springboot.blog.aspect.notFoundException;
+import com.springboot.blog.aspect.NotFoundException;
 import com.springboot.blog.entity.Account;
 import com.springboot.blog.entity.User;
 import com.springboot.blog.repository.AccountRepository;
@@ -35,7 +35,7 @@ public class AccountOverViewServiceImpl implements AccountOverViewService {
 		
 		if(user.isEmpty()) {
 			logger.info("The user is empty");
-			throw new notFoundException("No user found with the username: "+username);
+			throw new NotFoundException("No user found with the username: "+username);
 		}else {
 			logger.info("The user is not empty and fetching all the accounts."); 
 			
@@ -44,7 +44,7 @@ public class AccountOverViewServiceImpl implements AccountOverViewService {
 		    		.collect(Collectors.toList());
 		    if(accounts.isEmpty()) {
 		    	logger.info("No accounts found for the user"); 
-		    	return new ResponseEntity<>("You have no account with us. Please create one" ,HttpStatus.OK);
+		    	throw new NotFoundException("You have no account with us. Please create one");
 		    }else {
 		    	String summary="";
 			    logger.info("Accounts found for the user. Starting to get the overview");

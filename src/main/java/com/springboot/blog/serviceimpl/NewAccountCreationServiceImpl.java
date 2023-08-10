@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.springboot.blog.aspect.AccountExistsException;
+import com.springboot.blog.aspect.InvalidInputException;
+import com.springboot.blog.aspect.UserNotRegisteredException;
 import com.springboot.blog.entity.Account;
 import com.springboot.blog.payload.AccountDto;
 import com.springboot.blog.repository.AccountRepository;
@@ -29,20 +32,13 @@ public class NewAccountCreationServiceImpl implements NewAccountCreationService{
 	@Override
 	public ResponseEntity<String> accountCreation(AccountDto accountDto) {
 		logger.info("Got account dto");
-			
-			logger.info("Created the optional user from input user");
-			
 		if( accountDto.getUser() == null) {   
 			logger.info("The user is empty");
-			return new ResponseEntity<>("Please provide a user."
-					,HttpStatus.BAD_REQUEST);  
+			throw new InvalidInputException("Please provide a registered user.");
 		}else if(userRepo.existsByUsername(accountDto.getAccountName())) {
 			logger.info("user is not empty. But is not registered");
-			return new ResponseEntity<>("User is not registered. Please signup first",HttpStatus.OK);
+			throw new UserNotRegisteredException("User is not registered. Please signup first");
 		}
-		
-		
-		
 		else  {
 			logger.info("user is not null and is registered");
 			
@@ -51,8 +47,7 @@ public class NewAccountCreationServiceImpl implements NewAccountCreationService{
 			case "checking" :
 				logger.info("The account needed is checking");
 				if(accountRepo.existsByAccountName("Checking")&&accountRepo.existsByUser(accountDto.getUser()) ) {
-					return new ResponseEntity<>("You already have an checkings account"
-							,HttpStatus.OK);
+					throw new AccountExistsException("You already have an checkings account");
 					
 				}else {
 					logger.info("Account creation process is started");
@@ -71,8 +66,7 @@ public class NewAccountCreationServiceImpl implements NewAccountCreationService{
 				logger.info("The account needed is savings");
 				if(accountRepo.existsByAccountName("Savings")&&accountRepo.existsByUser(accountDto.getUser())) {
 					logger.info("Account already found in repo");
-					return new ResponseEntity<>("You already have an savings account"
-							,HttpStatus.OK);
+					throw new AccountExistsException("You already have a savings account");
 				}else {
 					logger.info("Account creation process is started");
 					Account newAccount = new Account();
@@ -89,8 +83,7 @@ public class NewAccountCreationServiceImpl implements NewAccountCreationService{
 				logger.info("The account needed is investment");
 				if(accountRepo.existsByAccountName("Savings")&&accountRepo.existsByUser(accountDto.getUser())) {
 					logger.info("Account already found in repo");
-					return new ResponseEntity<>("You already have an investement account"
-							,HttpStatus.BAD_REQUEST);
+					throw new AccountExistsException("You already have an investment account");
 				}else {
 					logger.info("Account creation process is started");
 					Account newAccount = new Account();
@@ -99,20 +92,14 @@ public class NewAccountCreationServiceImpl implements NewAccountCreationService{
 					newAccount.setUser(accountDto.getUser());
 					accountRepo.save(newAccount);
 					logger.info("Account creation process is completed");
-					return new ResponseEntity<>("You successfully created a investement account"
+					return new ResponseEntity<>("You successfully created a investement account."
 							, HttpStatus.OK);
 							}
 			default:
-				return new ResponseEntity<>("Please check all the details entered."
-						,HttpStatus.OK);
+				throw new InvalidInputException("Please check all the inputs");
 				
 			}
+				}
+			}
 		}
-		
-		
 	
-	}
-	
-
-
-}
