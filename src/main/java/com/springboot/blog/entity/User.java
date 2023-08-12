@@ -5,8 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.springboot.blog.enums.Gender;
 
 @Getter
 @Setter
@@ -31,9 +34,17 @@ public class User {
     	joinColumns=@JoinColumn(name="user_id" , referencedColumnName="id"),
     	inverseJoinColumns=@JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles= new HashSet<>();
-    
     private int mobileNumber;
-    private String address;
+    private LocalDate dateOfBirth;
+    private Gender gender;
+    
+    @OneToOne
+    @JoinColumn(name="currentAddressId")
+    private Address currentAddress;
+    
+    @OneToOne
+    @JoinColumn(name="billingAddressId")
+    private Address billingAddress;
     
     
 }

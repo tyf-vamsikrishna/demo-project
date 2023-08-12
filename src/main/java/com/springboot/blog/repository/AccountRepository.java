@@ -11,11 +11,7 @@ import com.springboot.blog.entity.User;
 @Component
 public interface AccountRepository extends JpaRepository<Account, Long > {
 	Optional<Account> findByUser(User user);
-	//@Query(value="SELECT * FROM USERS WHERE ")
-	//Optional<Account> findByUserName(String username);
-	
 	boolean existsByUser(User user);
-	
 	boolean existsByAccountName(String accountname);
 }
 

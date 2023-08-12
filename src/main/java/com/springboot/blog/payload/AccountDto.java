@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 public class AccountDto {
 	private long id;
-	//add not null not blank (no need of the if empty in model)
 	private User user;
 	private String accountName;
 	private long balance;

@@ -18,12 +18,12 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name="Transcations", uniqueConstraints=
-@UniqueConstraint(columnNames= {"transcationId"}))
+@UniqueConstraint(columnNames= {"transctionId"}))
 public class Transcation {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int transcationId;
+	private int transctionId;
 	
 	@ManyToOne
 	@JoinColumn(name="accountId",nullable=false)
